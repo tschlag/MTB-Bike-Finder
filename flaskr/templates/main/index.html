@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}See What Others Are Searching{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('main_page.create') }}">New Bike Build</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for post in posts %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{post['username']}}'s {{post['wheel_size']}} {{post['riding_type']}} Build!</h1>
+          <h4>Riding Type: {{ post['riding_type'] }}</h4>
+          <h4>Height (in): {{ post['height'] }}</h4>
+          <h4>Min Budget: {{ post['min_budget'] }}</h4>
+          <h4>Max Budget: {{ post['max_budget'] }}</h4>
+          <h4>Preferred Wheel Size: {{ post['wheel_size'] }}</h4>
+          <h4>Rear Suspension: {{ post['rear_sus'] }}</h4>
+          <h4>Country: {{ post['country'] }}</h4>
+          <h4>Pinkbike URL: {{ post['pinkbike_url'] }}</h4>
+          <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+        </div>
+        {% if g.user['id'] == post['author_id'] %}
+          <a class="action" href="{{ url_for('main_page.update', id=post['id']) }}">Edit</a>
+        {% endif %}
+      </header>
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
