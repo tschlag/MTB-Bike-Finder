@@ -1,18 +1,22 @@
 html { 
     font-family: sans-serif; 
-    background: rgb(77, 68, 68); 
+    background-image: url('../static/images/mtb_mountains.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    image-rendering: -webkit-optimize-contrast;
     padding: 1rem; 
 }
 
 body { 
     max-width: 960px; 
     margin: 0 auto; 
-    background: white; 
+    background: rgba(235, 219, 219, 0.85); 
 }
 
 h1 { 
     font-family: serif; 
-    color: #377ba8; 
+    color: #2c6909; 
     margin: 1rem 0; 
 }
 
@@ -22,7 +26,7 @@ a {
 
 hr { 
     border: none; 
-    border-top: 1px solid lightgray; 
+    border-top: 10px solid lightgray; 
 }
 
 nav { 
@@ -133,5 +137,8 @@ input[type=submit] {
     min-width: 10em; 
 }
 
-
+.index {
+    width: 200px;
+    word-wrap: break-word;
+}
 

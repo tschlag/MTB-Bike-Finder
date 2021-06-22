@@ -7,19 +7,64 @@
 {% block content %}
   <form method="post">
     <label for="riding_type">Riding Type*</label>
-    <input name="riding_type" id="riding_type" value="{{ request.form['riding_type'] }}" required>
+    <select id="riding_type" name="riding_type" value="{{ request.form['riding_type'] }}" required>
+      <option>Cross Country (XC)</option>
+      <option selected>Trail</option>
+      <option>Enduro</option>
+      <option>Downhill</option>
+    </select>
+    <br>
     <label for="height">Height*</label>
-    <input name="height" id="height" value="{{ request.form['height'] }}" required>
+    <select name="height" id="height" value="{{ request.form['height'] }}" required>
+      <option>4 ft 10 in</option>
+      <option>4 ft 11 in</option>
+      <option>5 ft 0 in</option>
+      <option>5 ft 1 in</option>
+      <option>5 ft 2 in</option>
+      <option>5 ft 3 in</option>
+      <option>5 ft 4 in</option>
+      <option>5 ft 5 in</option>
+      <option>5 ft 6 in</option>
+      <option>5 ft 7 in</option>
+      <option>5 ft 8 in</option>
+      <option>5 ft 9 in</option>
+      <option selected>5 ft 10 in</option>
+      <option>5 ft 11 in</option>
+      <option>6 ft 0 in</option>
+      <option>6 ft 1 in</option>
+      <option>6 ft 2 in</option>
+      <option>6 ft 3 in</option>
+      <option>6 ft 4 in</option>
+      <option>6 ft 5 in</option>
+    </select>
+    <br>
     <label for="min_budget">Minimum Budget</label>
     <input name="min_budget" id="min_budget" value="{{ request.form['min_budget'] }}">
     <label for="max_budget">Maximum Budget</label>
     <input name="max_budget" id="max_budget" value="{{ request.form['max_budget'] }}">
     <label for="wheel_size">Preferred Wheel Size</label>
-    <input name="wheel_size" id="wheel_size" value="{{ request.form['wheel_size'] }}">
+    <select name="wheel_size" id="wheel_size" value="{{ request.form['wheel_size'] }}">
+      <option>26"</option>
+      <option>27.5"</option>
+      <option>29"</option>
+      <option selected>No Wheel Size Preference</option>
+    </select>
+    <br>
     <label for="rear_sus">Hardtail or Full Suspension?</label>
-    <input name="rear_sus" id="rear_sus" value="{{ request.form['rear_sus'] }}">
+    <select name="rear_sus" id="rear_sus" value="{{ request.form['rear_sus'] }}">
+      <option>Hardtail</option>
+      <option selected>Full Suspension</option>
+    </select>
+    <br>
     <label for="country">What Country Do You Live In?*</label>
-    <input name="country" id="country" value="{{ request.form['country'] }}" required>
+    <select name="country" id="country" value="{{ request.form['country'] }}" required>
+      <option>Australia</option>
+      <option>Canada</option>
+      <option>Germany</option> 
+      <option>United Kingdom</option> 
+      <option selected>United States</option>  
+    </select>
+    <br>
     <input type="submit" value="Save">
   </form>
 {% endblock %}
