@@ -36,6 +36,9 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
         url += '&category=2'
 
     # Adds frame size filter based on user's height
+    height_split = height.split()
+    height = (12* height_split[0]) + height_split[2]
+
     if height != None:
         if int(height) <= 62:
             size = '1,2,3,10,4,5,6,7,8,13,14,15'
