@@ -37,7 +37,10 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
 
     # Adds frame size filter based on user's height
     height_split = height.split()
-    height = (12* height_split[0]) + height_split[2]
+    print(height_split)
+    height = (12 * int(height_split[0])) + int(height_split[2])
+
+    print(height)
 
     if height != None:
         if int(height) <= 62:
@@ -113,3 +116,6 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
     except:
         webbrowser.open(url)
         return url
+
+
+pinkbikeSearch('Trail', '5 ft 10 in', 1000, 2500, '29"', 'Full Suspension', 'United States')
