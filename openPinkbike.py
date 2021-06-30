@@ -117,5 +117,5 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
         webbrowser.open(url)
         return url
 
-
-pinkbikeSearch('Trail', '5 ft 10 in', 1000, 2500, '29"', 'Full Suspension', 'United States')
+# Testing search
+# pinkbikeSearch('Trail', '5 ft 10 in', 1000, 2500, '29"', 'Full Suspension', 'United States')
