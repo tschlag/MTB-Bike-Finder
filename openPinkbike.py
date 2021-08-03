@@ -79,7 +79,7 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
         url += '&price=' + str(min_budget) + '..'
 
     # Enters the user's suspension travels
-    if 'Hard' in rear_sus or 'hard' in rear_sus:
+    if rear_sus == 'Hardtail':
         if riding_type == 'Cross Country (XC)':
             fork_travel = '100,110,120'
         elif riding_type == 'Trail':
@@ -90,6 +90,7 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
             fork_travel = '180,190,200,203,208'
         
         url += '&reartravel=1' + '&fronttravel=' + fork_travel
+    # Enters suspension travel if full suspension option is picked
     else:
         if riding_type == 'Cross Country (XC)':
             fork_travel = '100,110,120'
@@ -107,7 +108,6 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
         url += '&reartravel=' + rear_travel + '&fronttravel=' + fork_travel
 
 
-
     print(url)
 
     try:
@@ -117,5 +117,3 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
         webbrowser.open(url)
         return url
 
-# Testing search
-# pinkbikeSearch('Trail', '5 ft 10 in', 1000, 2500, '29"', 'Full Suspension', 'United States')
