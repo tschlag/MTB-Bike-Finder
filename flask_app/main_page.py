@@ -2,7 +2,8 @@ from flask import Blueprint, flash, g, redirect, render_template, request, url_f
 from werkzeug.exceptions import abort
 from flask_app.auth import login_required
 from flask_app.db import get_db
-from openPinkbike import pinkbikeSearch
+from openSites import pinkbikeSearch
+from openSites import prosClosetSearch
 
 # Creates the blueprint for the bike post functions
 bp = Blueprint('main_page', __name__)
@@ -12,7 +13,7 @@ bp = Blueprint('main_page', __name__)
 def index():
     db = get_db()
     posts = db.execute(
-        'SELECT p.id, riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country, pinkbike_url, created, author_id, username'
+        'SELECT p.id, riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country, pinkbike_url, prosCloset_url, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -47,14 +48,17 @@ def create():
         global pinkbike_url
         pinkbike_url = pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country)
 
+        global prosCloset_url
+        prosCloset_url = prosClosetSearch(riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country)
+
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO post (riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country, pinkbike_url, author_id)'
-                ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                (riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country, pinkbike_url, g.user['id'])
+                'INSERT INTO post (riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country, pinkbike_url, prosCloset_url, author_id)'
+                ' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                (riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country, pinkbike_url, prosCloset_url, g.user['id'])
             )
             db.commit()
             return redirect(url_for('main_page.index'))
@@ -64,7 +68,7 @@ def create():
 # Get function to be used in update() and delete()
 def get_post(id, check_author=True):
     post = get_db().execute(
-        'SELECT p.id, riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country, pinkbike_url, created, author_id, username'
+        'SELECT p.id, riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country, pinkbike_url, prosCloset_url, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE p.id = ?',
         (id,)
@@ -78,7 +82,7 @@ def get_post(id, check_author=True):
 
     return post
 
-# Edits a user's bike search and generates pinkbike data
+# Edits a user's bike search and generates site data
 @bp.route('/<int:id>/editbikesearch', methods=('GET', 'POST'))
 @login_required
 def update(id):
@@ -107,15 +111,16 @@ def update(id):
             error = 'Country is required.'
 
         pinkbike_url = pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country)
+        prosCloset_url = prosClosetSearch(riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country)
 
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'UPDATE post SET riding_type = ?, height = ?, min_budget = ?, max_budget = ?, wheel_size = ?, rear_sus = ?, country = ?, pinkbike_url = ?'
+                'UPDATE post SET riding_type = ?, height = ?, min_budget = ?, max_budget = ?, wheel_size = ?, rear_sus = ?, country = ?, pinkbike_url = ?, prosCloset_url = ?'
                 ' WHERE id = ?',
-                (riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country, pinkbike_url, id)
+                (riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country, pinkbike_url, prosCloset_url, id)
             )
             db.commit()
             return redirect(url_for('main_page.index'))
@@ -123,7 +128,7 @@ def update(id):
     return render_template('main/update.html', post=post)
 
 # Deletes a user's bike search
-@bp.route('/<int:id>/delete', methods=('POST',))
+@bp.route('/<int:id>/delete', methods=('POST',)) 
 @login_required
 def delete(id):
     get_post(id)

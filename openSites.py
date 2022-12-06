@@ -1,3 +1,4 @@
+# Opens Pinkbike based on user entered details
 def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country):    
     import webbrowser
 
@@ -37,10 +38,7 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
 
     # Adds frame size filter based on user's height
     height_split = height.split()
-    print(height_split)
     height = (12 * int(height_split[0])) + int(height_split[2])
-
-    print(height)
 
     if height != None:
         if int(height) <= 62:
@@ -107,9 +105,6 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
 
         url += '&reartravel=' + rear_travel + '&fronttravel=' + fork_travel
 
-
-    print(url)
-
     try:
         webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open(url)
         return url
@@ -117,3 +112,69 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
         webbrowser.open(url)
         return url
 
+
+# Opens TheProsCloset based on user entered details
+def prosClosetSearch(riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country):    
+    import webbrowser
+
+    url = "https://www.theproscloset.com/collections/mountain-bikes?page=1"
+
+    # Adds frame size filter based on user's height
+    height_split = height.split()
+    height = (12 * int(height_split[0])) + int(height_split[2])
+
+    if height != None:
+        if int(height) <= 61:
+            size = 'xs'
+        elif int(height) > 61 and int(height) <= 65:
+            size = 's'
+        elif int(height) > 65 and int(height) <= 70:
+            size = 'm'
+        elif int(height) > 70 and int(height) <= 73:
+            size = 'l'
+        else:
+            size = 'xl'
+        url += "&tags=framesize-" + size
+
+    # Adds wheel size filter based on user's preference
+    if wheel_size != None:
+        wheels = {
+            '26"': "26",
+            '27.5"': "27.5",
+            '29"': "29"
+        }
+
+        if wheel_size in wheels:
+            wheel_pref = wheels[wheel_size]
+            url += '%2Cwheelsize-' + wheel_pref
+
+    # Enters the user's rear suspension travels
+    if rear_sus == 'Hardtail':
+        url += '%2Creartravel-hardtail'
+    # Enters suspension travel if full suspension option is picked
+    else:
+        if riding_type == 'Cross Country (XC)':
+            rear_travel = '110mm'
+        elif riding_type == 'Trail':
+            rear_travel = '111-130mm%2Creartravel-131-150mm'
+        elif riding_type == 'Enduro':
+            rear_travel = '131-150mm%2Creartravel-151-170mm'
+        elif riding_type == 'Downhill':
+            rear_travel = '171mm'
+
+        url += '%2Creartravel-' + rear_travel
+
+    # Enters the user's desired price range
+    if min_budget != "" and max_budget != "":
+        url += '&minPrice=' + str(min_budget) + '&maxPrice=' + str(max_budget)
+    elif min_budget == "" and max_budget != "":
+        url += '&maxPrice=' + str(max_budget)
+    elif min_budget != "" and max_budget == "":
+        url += '&minPrice=' + str(min_budget)
+
+    try:
+        webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open(url)
+        return url
+    except:
+        webbrowser.open(url)
+        return url

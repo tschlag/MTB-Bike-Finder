@@ -19,5 +19,6 @@ CREATE TABLE post (
   rear_sus TEXT NOT NULL, 
   country TEXT NOT NULL,
   pinkbike_url TEXT NOT NULL,
+  prosCloset_url TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );

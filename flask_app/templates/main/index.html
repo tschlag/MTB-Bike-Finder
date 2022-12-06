@@ -20,7 +20,8 @@
           <h4>Preferred Wheel Size: {{ post['wheel_size'] }}</h4>
           <h4>Rear Suspension: {{ post['rear_sus'] }}</h4>
           <h4>Country: {{ post['country'] }}</h4>
-          <h4>Pinkbike URL: {{ post['pinkbike_url'] }}</h4>
+          <h4><a href={{ post['pinkbike_url'] }} target="_blank">Pinkbike Link</a></h4>
+          <h4><a href={{ post['prosCloset_url'] }} target="_blank">TheProsCloset Link</a></h4>
           <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
         </div>
         {% if g.user['id'] == post['author_id'] %}
