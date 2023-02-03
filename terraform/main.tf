@@ -23,18 +23,17 @@ locals {
   }
 }
 
-
 resource "aws_security_group" "not_open_to_world" {
   name        = "not_open_to_world"
   description = "SG for mtb-bike-compare project EC2 instance"
   vpc_id      = local.vpc_id
 
   ingress {
-    description = "Allow inbound access to mtb-bike-compare EC2"
+    description = "Allow all inbound access to mtb-bike-compare site"
     from_port   = 8000
     to_port     = 8000
     protocol    = "tcp"
-    cidr_blocks = ["24.8.119.103/32"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     description = "Allow SSH inbound to mtb-bike-compare EC2"
@@ -74,4 +73,16 @@ resource "aws_instance" "mtb-bike-compare" {
   }
 
   tags = local.tags
+}
+
+resource "aws_route53_zone" "bikesearcher" {
+  name = "thebikesearcher.com"
+}
+
+resource "aws_route53_record" "a_record" {
+  zone_id = aws_route53_zone.bikesearcher.zone_id
+  name    = "thebikesearcher.com"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.mtb-bike-compare.public_ip]
 }
