@@ -1,7 +1,9 @@
+import requests
+import webbrowser
+from bs4 import BeautifulSoup
+
 # Opens Pinkbike based on user entered details
 def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country):    
-    import webbrowser
-
     url = "https://www.pinkbike.com/buysell/list/?"
 
     # Enters the country code to the url
@@ -33,7 +35,9 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
         url += '&category=75'
     elif riding_type == 'Downhill':
         url += '&category=1'
-    else:
+    elif riding_type == 'Trail':
+        url += '&category=102'
+    elif riding_type == 'Enduro':
         url += '&category=2'
 
     # Adds frame size filter based on user's height
@@ -45,9 +49,9 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
             size = '1,2,3,10,4,5,6,7,8,13,14,15'
         elif int(height) > 62 and int(height) <= 66:
             size = '9,11,12,17,18,20,21,22'
-        elif int(height) > 66 and int(height) <= 70:
+        elif int(height) > 66 and int(height) <= 69:
             size = '16,19,24,25,26,28,29'
-        elif int(height) > 70 and int(height) <= 73:
+        elif int(height) > 69 and int(height) <= 73:
             size = '23,27,34,35,36,30,31,47'
         else:
             size = '32,37,38,39,40,48,49,33,41,42,43,44,45,46,50,51,52,53,54'
@@ -107,6 +111,13 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
 
     try:
         webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open(url)
+        page = requests.get(url)
+        soup = BeautifulSoup(page.content, "html.parser")
+        bike_titles = soup.find_all("a", class_="bsitem-title")
+        bike_descriptions = soup.find_all("td", class_="bsitem-description")
+        for i in range(bike_descriptions):
+            print(bike_titles[i])
+            print(bike_descriptions[i], end="\n"*2)
         return url
     except:
         webbrowser.open(url)
@@ -114,9 +125,7 @@ def pinkbikeSearch(riding_type, height, min_budget, max_budget, wheel_size, rear
 
 
 # Opens TheProsCloset based on user entered details
-def prosClosetSearch(riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country):    
-    import webbrowser
-
+def prosClosetSearch(riding_type, height, min_budget, max_budget, wheel_size, rear_sus, country):
     url = "https://www.theproscloset.com/collections/mountain-bikes?page=1"
 
     # Adds frame size filter based on user's height
@@ -128,9 +137,9 @@ def prosClosetSearch(riding_type, height, min_budget, max_budget, wheel_size, re
             size = 'xs'
         elif int(height) > 61 and int(height) <= 65:
             size = 's'
-        elif int(height) > 65 and int(height) <= 70:
+        elif int(height) > 65 and int(height) <= 69:
             size = 'm'
-        elif int(height) > 70 and int(height) <= 73:
+        elif int(height) > 69 and int(height) <= 73:
             size = 'l'
         else:
             size = 'xl'
