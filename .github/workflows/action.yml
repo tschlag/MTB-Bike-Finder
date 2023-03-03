@@ -10,6 +10,8 @@ jobs:
     steps:
     - name: 'Checkout Repo'
       uses: actions/checkout@main
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
 
     - name: 'Terraform Init'
       uses: hashicorp/terraform-github-actions@master
@@ -22,7 +24,7 @@ jobs:
         TF_ACTION_WORKING_DIR: 'terraform'
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
 
     - name: 'Terraform Validate'
       uses: hashicorp/terraform-github-actions/validate@master
@@ -33,4 +35,4 @@ jobs:
         TF_ACTION_WORKING_DIR: 'terraform'
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
