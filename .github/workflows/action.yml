@@ -9,9 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 'Checkout Repo'
-      uses: actions/checkout@main
-      env:
-        GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+      uses: actions/checkout@v3
 
     - name: 'Terraform Init'
       uses: hashicorp/terraform-github-actions@master
