@@ -5,6 +5,11 @@ terraform {
     }
   }
 
+  backend "s3" {
+    bucket = "terraform-bucket-mtb-bike-compare"
+    region = "us-east-1"
+    key    = "terraform.tfstate"
+  }
   required_version = ">= 1.2.0"
 }
 
