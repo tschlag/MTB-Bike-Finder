@@ -8,6 +8,11 @@ permissions:
   id-token: write
   contents: read
 
+env:
+ # Credentials for deployment to AWS
+ AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+ AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
 jobs:
   terraform:
     name: 'Terraform-CICD-Pipeline'
@@ -18,16 +23,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
-    
-    - name: Configure AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1-node16
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        role-to-assume: arn:aws:iam::945415435124:role/Rapid7_User
-        aws-region: us-east-1
-        role-duration-seconds: 1200
-        role-session-name: GithubActions
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v2
