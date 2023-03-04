@@ -1,9 +1,9 @@
 from flask import Blueprint, flash, g, redirect, render_template, request, url_for
 from werkzeug.exceptions import abort
-from flask_app.auth import login_required
-from flask_app.db import get_db
-from flask_app.openSites import pinkbikeSearch
-from flask_app.openSites import prosClosetSearch
+from auth import login_required
+from db import get_db
+from openSites import pinkbikeSearch
+from openSites import prosClosetSearch
 
 # Creates the blueprint for the bike post functions
 bp = Blueprint('main_page', __name__)
