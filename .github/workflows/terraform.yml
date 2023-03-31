@@ -54,5 +54,5 @@ jobs:
       
     - name: Terraform Show
       id: show
-      run: terraform show -json out.plan > out.json
+      run: terraform show -json out.plan
  
