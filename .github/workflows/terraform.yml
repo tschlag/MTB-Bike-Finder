@@ -50,5 +50,9 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -no-color
+      run: terraform plan -no-color -out=out.plan
+      
+    - name: Terraform Show
+      id: show
+      run: terraform show -json out.plan > out.json
  
